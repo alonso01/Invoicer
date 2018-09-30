@@ -42,11 +42,11 @@ namespace Invoicer.Services.Impl
             row.Cells[0].AddParagraph(Invoice.Title, ParagraphAlignment.Right, "H1-20");
 
             row = subTable.AddRow();
-            row.Cells[0].AddParagraph("REFERENCE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[0].AddParagraph("CLAVE NUMÉRICA:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.Reference, ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("BILLING DATE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[0].AddParagraph("FECHA:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.BillingDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("DUE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[0].AddParagraph("", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.DueDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
         }
 
@@ -67,9 +67,9 @@ namespace Invoicer.Services.Impl
             Paragraph info = row.Cells[1].AddParagraph();
             info.Format.Alignment = ParagraphAlignment.Right;
             info.Style = "H2-8";
-            info.AddText("Page ");
+            info.AddText("Pag. ");
             info.AddPageField();
-            info.AddText(" of ");
+            info.AddText(" de ");
             info.AddNumPagesField();
         }
 
@@ -159,13 +159,13 @@ namespace Invoicer.Services.Impl
             row.TopPadding = 10;
             row.Borders.Bottom = BorderLine;
 
-            row.Cells[0].AddParagraph("PRODUCT", ParagraphAlignment.Left);
-            row.Cells[1].AddParagraph("AMOUNT", ParagraphAlignment.Center);
-            row.Cells[2].AddParagraph("VAT %", ParagraphAlignment.Center);
-            row.Cells[3].AddParagraph("UNIT PRICE", ParagraphAlignment.Center);
+            row.Cells[0].AddParagraph("SERVICIO", ParagraphAlignment.Left);
+            row.Cells[1].AddParagraph("MONTO", ParagraphAlignment.Center);
+            row.Cells[2].AddParagraph("IMPUESTO (%)", ParagraphAlignment.Center);
+            row.Cells[3].AddParagraph("PRECIO UNITARIO", ParagraphAlignment.Center);
             if (Invoice.HasDiscount)
             {
-                row.Cells[4].AddParagraph("DISCOUNT", ParagraphAlignment.Center);
+                row.Cells[4].AddParagraph("DESCUENTO", ParagraphAlignment.Center);
                 row.Cells[5].AddParagraph("TOTAL", ParagraphAlignment.Center);
             }
             else
@@ -300,7 +300,7 @@ namespace Invoicer.Services.Impl
 
                 if (Invoice.Company.HasCompanyNumber && Invoice.Company.HasVatNumber)
                 {
-                    row.Cells[0].AddParagraph(string.Format("Company Number: {0}, VAT Number: {1}",
+                    row.Cells[0].AddParagraph(string.Format("{0}, {1}",
                         Invoice.Company.CompanyNumber, Invoice.Company.VatNumber),
                         ParagraphAlignment.Center, "H2-9B-Inverse")
                         .Format.Shading.Color = shading;
@@ -308,11 +308,11 @@ namespace Invoicer.Services.Impl
                 else
                 {
                     if (Invoice.Company.HasCompanyNumber)
-                        row.Cells[0].AddParagraph(string.Format("Company Number: {0}", Invoice.Company.CompanyNumber),
+                        row.Cells[0].AddParagraph(string.Format("{0}", Invoice.Company.CompanyNumber),
                         ParagraphAlignment.Center, "H2-9B-Inverse")
                         .Format.Shading.Color = shading;
                     else
-                        row.Cells[0].AddParagraph(string.Format("VAT Number: {0}", Invoice.Company.VatNumber),
+                        row.Cells[0].AddParagraph(string.Format("{0}", Invoice.Company.VatNumber),
                         ParagraphAlignment.Center, "H2-9B-Inverse")
                         .Format.Shading.Color = shading;
                 }
